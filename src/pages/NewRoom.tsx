@@ -6,7 +6,10 @@ import logoImg from "../assets/logo.svg";
 import '../styles/auth.scss';
 import { Button } from "../components/Button";
 
+
 export function NewRoom() {
+    // const { user } = useAuth();
+
     return (
         <div id="page-auth">
             <aside>
