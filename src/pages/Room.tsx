@@ -9,9 +9,21 @@ import { FormEvent, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { database } from '../services/firebase';
 import { useEffect } from 'react';
+import { setSyntheticLeadingComments } from 'typescript';
 
 type RoomParams = {
     id: string;
+}
+
+type Question = {
+    id: string;
+    author: {
+        name: string;
+        avatar: string;
+    }
+    content: string;
+    isAnswered: boolean;
+    isHighlighted: boolean;
 }
 
 type FirebaseQuestions = Record<string, {
@@ -22,12 +34,14 @@ type FirebaseQuestions = Record<string, {
     content: string;
     isAnswered: boolean;
     isHighlighted: boolean;
-}
+}>;
 
 export function Room() {
     const { user } = useAuth();
     const params = useParams<RoomParams>();
     const [ newQuestion, setNewQuestion ] = useState('');
+    const [ questions, setQuestions ] = useState<Question[]>([]);
+    const [ title, setTitle ] = useState('');
 
     const roomId = params.id;
 
@@ -36,9 +50,20 @@ export function Room() {
 
         roomRef.once('value', room => {
             const databaseRoom = room.val();
-            const firebaseQuestions:FirebaseQuestions = databaseRoom.questions;
+            const firebaseQuestions:FirebaseQuestions = databaseRoom.questions ?? {};
 
-            const parsedQuestions = Object.entries(firebaseQuestions ?? {})
+            const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+                return {
+                    id: key,
+                    content: value.content,
+                    author: value.author,
+                    isHighlighted: value.isHighlighted,
+                    isAnswered: value.isAnswered
+                }
+            })
+
+            setTitle(databaseRoom.title);
+            setQuestions(parsedQuestions);
         })
     }, [roomId]);
 
