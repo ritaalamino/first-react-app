@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';    
 import { FormEvent, useState } from 'react';
 
-import illustrationImg from "../assets/illustration.svg";
-import logoImg from "../assets/logo.svg";
+import illustrationImg from "../assets/images/illustration.svg";
+import logoImg from "../assets/images/logo.svg";
 
 import '../styles/auth.scss';
 import { Button } from "../components/Button";
