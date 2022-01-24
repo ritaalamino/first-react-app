@@ -1,5 +1,6 @@
 #page-auth {
     display: flex;
+    overflow: hidden;
     
     align-items: stretch;
     height: 100vh;
@@ -149,6 +150,8 @@
     }
     /* media queries */
     @media (max-width: 768px) {
+        overflow: scroll !important;
+
         flex-direction: column;
 
         html {
@@ -162,7 +165,7 @@
         aside {
             padding: 40px 40px !important;
             align-items: center;
-            
+
             strong {
                 font-size: 2.4rem;
             }
@@ -185,6 +188,7 @@
     }
 
     @media (max-width: 300px) {
+
         button {
             width: 8rem;
             align-self: center;
